@@ -14,13 +14,12 @@ strategy becomes characterized by a **no-transaction region**, inside which
 the investor leaves the portfolio unchanged and trades only when the
 portfolio reaches a boundary.
 
-This project studies optimal portfolio choice under proportional
-transaction costs from both theoretical and numerical perspectives. The
-thesis reviews the discrete-time and continuous-time literature, with
-particular emphasis on two questions: whether the duality methods of the
-frictionless problem extend to markets with transaction costs, and how
-optimal trading policies depend on the frequency at which an investor can
-rebalance.
+This project studies optimal portfolio choice under proportional transaction
+costs from both theoretical and numerical perspectives. The thesis reviews
+the discrete-time and continuous-time literature, with particular emphasis
+on two questions: whether the duality methods of the frictionless problem
+extend to markets with transaction costs, and how optimal trading policies
+depend on the frequency at which an investor can rebalance.
 
 The theoretical part covers:
 
@@ -49,8 +48,8 @@ The numerical solver is validated against:
 
 The main numerical experiment studies the scaling of the width of the
 no-transaction region as transaction costs become small. For horizons
-(T \geq 3), the fitted exponent stabilises around **0.349**, close to but
-persistently above the theoretical (1/3) scaling derived for a related
+$T \geq 3$, the fitted exponent stabilises around **0.349**, close to but
+persistently above the theoretical $1/3$ scaling derived for a related
 log-utility, infinite-horizon problem. The discrepancy is analysed
 numerically but not resolved.
 
@@ -59,9 +58,9 @@ prices for a European contingent claim**, showing numerically how
 transaction costs destroy perfect replication and create a spread between
 buyer and seller indifference prices.
 
-The repository therefore provides a reproducible implementation of the
-main numerical results of the thesis, together with the diagnostics used
-to validate the numerical scheme.
+The repository therefore provides a reproducible implementation of the main
+numerical results of the thesis, together with the diagnostics used to
+validate the numerical scheme.
 
 ## Overview
 
@@ -118,13 +117,13 @@ validation, numerical experiments and figure generation.
 
 ## 1. Frictionless benchmark
 
-Consider a market with one riskless asset earning rate (r) and one risky
+Consider a market with one riskless asset earning rate $r$ and one risky
 asset satisfying
 
-$dS_t = S_t(\mu,dt+\sigma,dW_t).$
+$dS_t = S_t(\mu\,dt+\sigma\,dW_t).$
 
 In the frictionless Merton problem, the investor can continuously rebalance
-the portfolio. For CRRA utility with relative risk aversion (\gamma), the
+the portfolio. For CRRA utility with relative risk aversion $\gamma$, the
 optimal risky proportion is
 
 $\pi^* = \frac{\mu-r}{\gamma\sigma^2}$
@@ -132,7 +131,7 @@ $\pi^* = \frac{\mu-r}{\gamma\sigma^2}$
 This constant target is the benchmark against which the transaction-cost
 solution is compared.
 
-The key difficulty is that continuously maintaining (\pi^*) requires
+The key difficulty is that continuously maintaining $\pi^*$ requires
 infinitely frequent trading. With any strictly positive proportional
 transaction cost, the resulting turnover is no longer admissible as an
 optimal strategy.
@@ -143,20 +142,20 @@ optimal strategy.
 
 The risky asset is traded through an asymmetric bid-ask spread.
 
-If (\lambda) denotes the proportional buying cost and (\nu) the
-proportional selling cost, buying one unit at price (S_t) costs
+If $\lambda$ denotes the proportional buying cost and $\nu$ the
+proportional selling cost, buying one unit at price $S_t$ costs
 
 $(1+\lambda)S_t,$
 
 while selling one unit yields
 
-$(1-\nu)S_t$
+$(1-\nu)S_t.$
 
 The investor's state is described by:
 
-* (X_t): cash holding;
-* (Y_t): number of shares;
-* (S_t): risky-asset price.
+* $X_t$: cash holding;
+* $Y_t$: number of shares;
+* $S_t$: risky-asset price.
 
 Trading is represented by two non-decreasing processes:
 
@@ -164,11 +163,11 @@ $L_t = \text{cumulative purchases},\qquad M_t = \text{cumulative sales}$
 
 The portfolio dynamics are
 
-$dX_t = rX_tdt-c_tdt -(1+\lambda)dL_t +(1-\nu)dM_t$,
+$dX_t = rX_t\,dt-c_t\,dt -(1+\lambda)dL_t +(1-\nu)dM_t,$
 
 and
 
-$dY_t = Y_t\frac{dS_t}{S_t} +dL_t-dM_t$
+$dY_t = Y_t\frac{dS_t}{S_t} + dL_t-dM_t$
 
 The liquidation value of the risky position is
 
@@ -189,14 +188,12 @@ $y^-(t,S) \leq y^+(t,S)$
 
 such that:
 
-* below (y^-(t,S)), the investor buys;
-* between (y^-(t,S)) and (y^+(t,S)), the investor does nothing;
-* above (y^+(t,S)), the investor sells.
+* below $y^-(t,S)$, the investor buys;
+* between $y^-(t,S)$ and $y^+(t,S)$, the investor does nothing;
+* above $y^+(t,S)$, the investor sells.
 
-The region
-$y^-(t,S), y^+(t,S)$
-
-is the **no-transaction region**.
+The region between $y^-(t,S)$ and $y^+(t,S)$ is the **no-transaction
+region**.
 
 As transaction costs decrease, the region shrinks towards the frictionless
 Merton target.
@@ -220,22 +217,22 @@ $X_T+\ell(Y_T,S_T)-\phi(S_T)$
 
 the objective is
 
-$J(t,x,y,S) = \sup_{(L,M)} \mathbb{E} \left[ -e^{-\gamma(X_T+\ell(Y_T,S_T)-\phi(S_T))} \mid X_t=x,Y_t=y,S_t=S ]\right$
+$J(t,x,y,S) = \sup_{(L,M)} \mathbb{E} \left[ -e^{-\gamma(X_T+\ell(Y_T,S_T)-\phi(S_T))} \mid X_t=x,Y_t=y,S_t=S \right]$
 
 CARA translation invariance gives the factorisation
 
 $J(t,x,y,S) = -e^{-\gamma x e^{r(T-t)}}Q(t,y,S)$
 
-The cash variable (x) therefore disappears from the reduced problem.
+The cash variable $x$ therefore disappears from the reduced problem.
 
 The numerical solver only needs to track:
 
-* time (t);
-* stock price (S);
-* number of shares (y).
+* time $t$;
+* stock price $S$;
+* number of shares $y$.
 
 This reduces the free-boundary problem to a pair of curves in the
-((t,S)) state space.
+$(t,S)$ state space.
 
 
 # Core Modules
@@ -267,7 +264,7 @@ $\Delta t = \frac{T}{N}$
 the tree uses
 
 $u=e^{\sigma\sqrt{\Delta t}}$
-$\qquad$
+
 $d=e^{-\sigma\sqrt{\Delta t}}$
 
 with transition probability
@@ -285,8 +282,8 @@ This is the central numerical module of the project.
 
 It implements the finite-horizon CARA transaction-cost problem using:
 
-* a recombining binomial tree for (S);
-* a uniform grid for stock holdings (Y);
+* a recombining binomial tree for $S$;
+* a uniform grid for stock holdings $Y$;
 * backward induction;
 * local buy / sell / no-trade optimisation;
 * Gauss-Seidel policy iteration;
@@ -305,15 +302,15 @@ $Q_n^N(j,k) = pQ_{n+1}(j+1,k) + (1-p)Q_{n+1}(j,k)$
 
 ### Buy candidate
 
-Buying moves the portfolio from (y_k) to (y_{k+1}) and introduces the
+Buying moves the portfolio from $y_k$ to $y_{k+1}$ and introduces the
 corresponding transaction cost.
 
 ### Sell candidate
 
-Selling moves the portfolio from (y_k) to (y_{k-1}) and introduces the
+Selling moves the portfolio from $y_k$ to $y_{k-1}$ and introduces the
 corresponding transaction cost.
 
-The recursion takes the minimum of the three candidates because (Q) is
+The recursion takes the minimum of the three candidates because $Q$ is
 defined through the negative exponential utility representation.
 
 Because buy and sell decisions refer to neighbouring values of the current
@@ -333,20 +330,20 @@ The theoretical asymptotic balance is
 
 $h^*\propto\lambda^{1/3}$
 
-where (h) denotes the width of the no-transaction region.
+where $h$ denotes the width of the no-transaction region.
 
 The numerical implementation estimates the empirical relationship
 
-$\text{width}(\lambda)\approxC\lambda^\beta$
+$\text{width}(\lambda)\approx C\lambda^\beta$
 
 through a log-log regression.
 
-The exponent (\beta) is then compared with the theoretical benchmark
+The exponent $\beta$ is then compared with the theoretical benchmark
 
 $\beta=\frac13$
 
 The module also supports the analysis of the dependence of the fitted
-exponent on the investment horizon (T).
+exponent on the investment horizon $T$.
 
 
 ## `src/txcost/diagnostics.py`
@@ -409,22 +406,22 @@ the numerical results, while the reusable numerical routines live in
 
 The main numerical experiments use
 
-$\mu=0.08, \qquad r=0.02,\qquad\sigma=0.20,\qquad\gamma=1$
+$\mu=0.08,\qquad r=0.02,\qquad \sigma=0.20,\qquad \gamma=1$
 
 with symmetric transaction costs
 
 $\lambda=\nu$
 
-At (S_0=1), the frictionless target is therefore
+At $S_0=1$, the frictionless target is therefore
 
-$y^* = \frac{\mu-r}{\gamma\sigma^2} 1.5$
+$y^* = \frac{\mu-r}{\gamma\sigma^2} = 1.5$
 
 The transaction-cost solution produces a no-transaction interval centred
 close to this target.
 
-For (T=1), the interpolated widths obtained for
+For $T=1$, the interpolated widths obtained for
 
-$\lambda \in {0.0005,0.001,0.002,0.004,0.008}$
+$\lambda \in \{0.0005,0.001,0.002,0.004,0.008\}$
 
 are approximately
 
@@ -439,7 +436,7 @@ the small-cost theory.
 A log-log regression of the no-transaction-region width against the
 transaction-cost parameter gives:
 
-| Horizon (T) | Number of tree steps (N) | Fitted exponent |
+| Horizon ($T$) | Number of tree steps ($N$) | Fitted exponent |
 | ----------: | -----------------------: | --------------: |
 |           1 |                      150 |           0.380 |
 |           3 |                      450 |           0.348 |
@@ -450,19 +447,16 @@ The main finding is therefore a rapid decline from
 
 $0.380$
 
-at (T=1) to approximately
+at $T=1$ to approximately $0.349$ for $T\geq3$, followed by an apparent
+plateau.
 
-$0.349$
-
-for (T\geq3), followed by an apparent plateau.
-
-The theoretical (1/3) exponent comes from the small-cost asymptotics of a
+The theoretical $1/3$ exponent comes from the small-cost asymptotics of a
 related problem involving logarithmic utility and an infinite horizon.
 The numerical solver here instead solves a finite-horizon CARA problem with
 terminal liquidation.
 
 Consequently, the numerical experiment is **consistent with the qualitative
-(1/3)-type small-cost scaling without reproducing the exact theoretical
+$1/3$-type small-cost scaling without reproducing the exact theoretical
 exponent**.
 
 The remaining discrepancy is approximately 5% for the longest horizons
@@ -481,7 +475,7 @@ the lower no-transaction boundary is pulled towards
 
 $y=0$
 
-as (t\rightarrow T).
+as $t\rightarrow T$.
 
 This behaviour comes from the terminal liquidation condition and has no
 direct counterpart in the infinite-horizon formulation used by the closed
@@ -505,7 +499,7 @@ the seller's indifference price is
 $p_s = \frac{1}{\gamma e^{rT}}\log\left(\frac{Q(0,0,S_0;\phi)}{Q(0,0,S_0;0)}\right)$
 
 while the buyer's price is obtained by solving the corresponding problem
-with (-\phi).
+with $-\phi$.
 
 For
 
@@ -517,7 +511,7 @@ $0.0892$
 
 The numerical results are:
 
-| (\lambda=\nu) | Seller price | Buyer price | Spread |
+| $\lambda=\nu$ | Seller price | Buyer price | Spread |
 | ------------: | -----------: | ----------: | -----: |
 |             0 |       0.0890 |      0.0890 | 0.0000 |
 |         0.001 |       0.0901 |      0.0893 | 0.0008 |
@@ -551,7 +545,7 @@ $\mu=0.08,\quad r=0.02,\quad \sigma=0.20,\quad \gamma=1,\quad \lambda=\nu=0.02$
 
 with
 
-$S_0=1,\qquad T=1,$
+$S_0=1,\qquad T=1$
 
 a direct brute-force enumeration gives
 
@@ -565,25 +559,25 @@ The recursive solver produces the same value to every digit shown after
 refinement of the share grid and policy-iteration tolerance.
 
 This check is important because it validates the general recursive algorithm
-against an independently constructed optimisation problem for which exhaustive
-enumeration is computationally feasible.
+against an independently constructed optimisation problem for which
+exhaustive enumeration is computationally feasible.
 
 
 # Key Results
 
 | Experiment                       | Result                                                                                                               |
 | -------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| **Frictionless benchmark**       | The numerical framework reproduces the Merton risky-asset target (y^*=1.5) for the main calibration.                 |
+| **Frictionless benchmark**       | The numerical framework reproduces the Merton risky-asset target ($y^*=1.5$) for the main calibration.                 |
 | **No-transaction region**        | The optimal policy becomes a band rather than a single target; the band widens monotonically with transaction costs. |
-| **Small-cost scaling, (T=1)**    | Log-log regression gives an exponent of **0.380**.                                                                   |
-| **Small-cost scaling, (T\geq3)** | The fitted exponent stabilises around **0.349**, approximately 5% above (1/3).                                       |
+| **Small-cost scaling, $T=1$**    | Log-log regression gives an exponent of **0.380**.                                                                   |
+| **Small-cost scaling, $T\geq3$** | The fitted exponent stabilises around **0.349**, approximately 5% above $1/3$.                                       |
 | **Boundary interpolation**       | Sub-grid interpolation removes the grid-snapping bias that affected earlier scaling estimates.                       |
-| **Horizon effect**               | The exponent decreases from 0.380 at (T=1) to approximately 0.349 at (T=3), then plateaus through (T=10).            |
+| **Horizon effect**               | The exponent decreases from 0.380 at $T=1$ to approximately 0.349 at $T=3$, then plateaus through $T=10$.            |
 | **Numerical convergence**        | Results are stable under the reported tree, share-grid, Gauss-Seidel and grid-width convergence checks.              |
-| **Two-period brute force**       | Recursive solver agrees with independent enumeration: (Q(0,0,S_0)=0.994534817).                                      |
+| **Two-period brute force**       | Recursive solver agrees with independent enumeration: $Q(0,0,S_0)=0.994534817$.                                      |
 | **Indifference pricing**         | Buyer/seller prices converge to Black-Scholes as transaction costs vanish and separate as costs increase.            |
 | **Replication**                  | Positive transaction costs create a non-zero buyer/seller indifference-price spread.                                 |
-| **Open question**                | The numerical exponent does not reach the theoretical (1/3) within the computationally accessible horizons.          |
+| **Open question**                | The numerical exponent does not reach the theoretical $1/3$ within the computationally accessible horizons.          |
 
 
 # Validation Strategy
@@ -605,7 +599,7 @@ reference implementation to detect implementation-level errors.
 
 ### 3. Two-period brute force
 
-For (N=2), the dynamic-programming recursion is compared against direct
+For $N=2$, the dynamic-programming recursion is compared against direct
 enumeration over the possible holdings.
 
 ### 4. Time-grid convergence
@@ -615,12 +609,12 @@ the estimated boundaries and scaling exponents.
 
 ### 5. Share-grid convergence
 
-The portfolio grid spacing (\Delta y) is refined to ensure that the
+The portfolio grid spacing $\Delta y$ is refined to ensure that the
 numerical free boundaries are not grid-dependent.
 
 ### 6. Grid-width convergence
 
-The half-width (M) of the share grid is increased to verify that the
+The half-width $M$ of the share grid is increased to verify that the
 optimiser does not interact with an artificial grid boundary.
 
 ### 7. Sub-grid boundary interpolation
@@ -640,7 +634,7 @@ The binomial-tree recursion is performed under the **physical probability**.
 
 This is deliberate.
 
-The reduced value function (Q) represents an expected-utility quantity,
+The reduced value function $Q$ represents an expected-utility quantity,
 
 $Q = \mathbb{E}[\text{terminal utility transformation}]$
 
@@ -664,25 +658,25 @@ The numerical results leave two main questions open.
 
 ## CARA finite horizon versus logarithmic infinite horizon
 
-The theoretical (1/3) scaling benchmark used for comparison comes from a
+The theoretical $1/3$ scaling benchmark used for comparison comes from a
 different problem:
 
 * logarithmic utility;
 * infinite horizon;
 * no terminal liquidation effect;
-* normalisation (r=0).
+* normalisation $r=0$.
 
 The numerical solver instead considers:
 
 * CARA utility;
 * finite horizon;
 * terminal liquidation;
-* (r=0.02).
+* $r=0.02$.
 
-The observed plateau around (0.349) could therefore either represent the
+The observed plateau around $0.349$ could therefore either represent the
 true asymptotic behaviour of the CARA finite-horizon formulation or simply a
-pre-asymptotic regime that would eventually converge to (1/3) for horizons
-much larger than (T=10).
+pre-asymptotic regime that would eventually converge to $1/3$ for horizons
+much larger than $T=10$.
 
 Resolving this would require either substantially longer numerical horizons
 or a dedicated small-cost asymptotic analysis of the finite-horizon CARA
@@ -694,7 +688,7 @@ The thesis also formulates the problem with an additional convex constraint
 
 $\pi_t\in K$
 
-where (K) may represent, for example:
+where $K$ may represent, for example:
 
 * a leverage limit;
 * a no-short-sale constraint;
@@ -872,4 +866,3 @@ independently of the presentation layer.
   Optimization, 31(2), 470–493.
 - Cox, J. C., Ross, S. A. & Rubinstein, M. (1979). *Option Pricing:
   A Simplified Approach*. Journal of Financial Economics, 7(3), 229–263.
-
