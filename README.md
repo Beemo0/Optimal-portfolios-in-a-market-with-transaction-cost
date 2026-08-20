@@ -182,17 +182,17 @@ problem** rather than an ordinary portfolio optimisation problem.
 
 The optimal policy is not a single target portfolio.
 
-Instead, there exist two boundaries
+Instead, there exist two boundaries:
 
-$y^{-}(t,S) \leq y^{+}(t,S)$
+y_minus(t,S) <= y_plus(t,S)
 
 such that:
 
-* below $y^{-}(t,S)$, the investor buys;
-* between $y^{-}(t,S)$ and $y^{+}(t,S)$, the investor does nothing;
-* above $y^{+}(t,S)$, the investor sells.
+- below y_minus(t,S), the investor buys;
+- between y_minus(t,S) and y_plus(t,S), the investor does nothing;
+- above y_plus(t,S), the investor sells.
 
-The region between $y^{-}(t,S)$ and $y^{+}(t,S)$ is the **no-transaction region**.
+The region between y_minus(t,S) and y_plus(t,S) is the **no-transaction region**.
 
 As transaction costs decrease, the region shrinks towards the frictionless Merton target.
 
