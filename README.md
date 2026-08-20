@@ -188,9 +188,9 @@ $y^-(t,S) \leq y^+(t,S)$
 
 such that:
 
-* below $y^-(t,S)$, the investor buys;
-* between $y^-(t,S)$ and $y^+(t,S)$, the investor does nothing;
-* above $y^+(t,S)$, the investor sells.
+- below $y^-(t,S)$, the investor buys;
+- between $y^-(t,S)$ and $y^+(t,S)$, the investor does nothing;
+- above $y^+(t,S)$, the investor sells.
 
 The region between $y^-(t,S)$ and $y^+(t,S)$ is the **no-transaction region**.
 
