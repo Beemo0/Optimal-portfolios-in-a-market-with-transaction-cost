@@ -184,7 +184,7 @@ The optimal policy is not a single target portfolio.
 
 Instead, there exist two boundaries:
 
-y_minus(t,S) <= y_plus(t,S)
+$y_minus(t,S) <= y_plus(t,S)$
 
 such that:
 
