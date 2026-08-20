@@ -164,7 +164,7 @@ $L_t = \text{cumulative purchases},\qquad M_t = \text{cumulative sales}$
 
 The portfolio dynamics are
 
-$dX_t = rX_tdt-c_tdt -(1+\lambda) \quad dL_t +(1-\nu)dM_t$,
+$dX_t = rX_tdt-c_tdt -(1+\lambda)dL_t +(1-\nu)dM_t$,
 
 and
 
@@ -502,7 +502,7 @@ $\phi(S_T)=(S_T-K)^+$
 
 the seller's indifference price is
 
-$p_s === \frac{1}{\gamma e^{rT}}\log\left(\frac{Q(0,0,S_0;\phi)}{Q(0,0,S_0;0)}\right)$
+$p_s = \frac{1}{\gamma e^{rT}}\log\left(\frac{Q(0,0,S_0;\phi)}{Q(0,0,S_0;0)}\right)$
 
 while the buyer's price is obtained by solving the corresponding problem
 with (-\phi).
