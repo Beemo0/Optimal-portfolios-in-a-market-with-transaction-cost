@@ -164,7 +164,7 @@ $L_t = \text{cumulative purchases},\qquad M_t = \text{cumulative sales}$
 
 The portfolio dynamics are
 
-$dX_t = rX_tdt-c_tdt -(1+\lambda)dL_t +(1-\nu)dM_t$,
+$dX_t = rX_tdt-c_tdt -(1+\lambda) \quad dL_t +(1-\nu)dM_t$,
 
 and
 
@@ -172,8 +172,7 @@ $dY_t = Y_t\frac{dS_t}{S_t} +dL_t-dM_t$
 
 The liquidation value of the risky position is
 
-$
-\ell(y,S) = yS -\nu Sy^+ -\lambda Sy^-$
+$\ell(y,S) = yS -\nu Sy^+ -\lambda Sy^-$
 
 The transaction-cost problem is therefore a **singular stochastic control
 problem** rather than an ordinary portfolio optimisation problem.
@@ -195,7 +194,7 @@ such that:
 * above (y^+(t,S)), the investor sells.
 
 The region
-$y^-(t,S),y^+(t,S)$
+$y^-(t,S), y^+(t,S)$
 
 is the **no-transaction region**.
 
@@ -221,14 +220,11 @@ $X_T+\ell(Y_T,S_T)-\phi(S_T)$
 
 the objective is
 
-$J(t,x,y,S) = 
-
-\sup_{(L,M)} \mathbb{E} \left[ -e^{-\gamma(X_T+\ell(Y_T,S_T)-\phi(S_T))} \mid X_t=x,Y_t=y,S_t=S ]\right$
+$J(t,x,y,S) = \sup_{(L,M)} \mathbb{E} \left[ -e^{-\gamma(X_T+\ell(Y_T,S_T)-\phi(S_T))} \mid X_t=x,Y_t=y,S_t=S ]\right$
 
 CARA translation invariance gives the factorisation
 
-$
-J(t,x,y,S) = -e^{-\gamma x e^{r(T-t)}}Q(t,y,S)$
+$J(t,x,y,S) = -e^{-\gamma x e^{r(T-t)}}Q(t,y,S)$
 
 The cash variable (x) therefore disappears from the reduced problem.
 
@@ -271,7 +267,7 @@ $\Delta t = \frac{T}{N}$
 the tree uses
 
 $u=e^{\sigma\sqrt{\Delta t}}$
-\qquad
+$\qquad$
 $d=e^{-\sigma\sqrt{\Delta t}}$
 
 with transition probability
@@ -428,21 +424,11 @@ close to this target.
 
 For (T=1), the interpolated widths obtained for
 
-$
-\lambda
-\in
-{0.0005,0.001,0.002,0.004,0.008}
-$
+$\lambda \in {0.0005,0.001,0.002,0.004,0.008}$
 
 are approximately
 
-[
-0.222,\quad
-0.283,\quad
-0.361,\quad
-0.464,\quad
-0.645.
-]
+$0.222,\quad 0.283,\quad 0.361,\quad 0.464,\quad 0.645$
 
 The width increases monotonically with transaction costs, as predicted by
 the small-cost theory.
@@ -561,7 +547,7 @@ by a two-period binomial model.
 
 For
 
-[\mu=0.08,\quad r=0.02,\quad \sigma=0.20,\quad \gamma=1,\quad \lambda=\nu=0.02$
+$\mu=0.08,\quad r=0.02,\quad \sigma=0.20,\quad \gamma=1,\quad \lambda=\nu=0.02$
 
 with
 
@@ -569,8 +555,7 @@ $S_0=1,\qquad T=1,$
 
 a direct brute-force enumeration gives
 
-$
-Q(0,0,S_0) = 0.994534817$
+$Q(0,0,S_0) = 0.994534817$
 
 with optimal first-period holding approximately
 
